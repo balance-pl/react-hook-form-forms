@@ -54,6 +54,10 @@ function SuspenceFallback() {
   )
 }
 
+function IndexComponent() {
+  return '← Выберите форму из списка слева'
+}
+
 function App() {
   return (
     <div className={styles.App}>
@@ -146,7 +150,7 @@ function App() {
                 </React.Suspense>
               }
             />
-            <Route path="*" element={'Not Found'} />
+            <Route path="*" element={<IndexComponent />} />
           </Routes>
         </div>
       </main>

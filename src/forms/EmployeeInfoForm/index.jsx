@@ -125,9 +125,9 @@ function EmployeeInfoForm() {
           )}
         </FormField>
         <Row>
-          <Col>
-            <FormField field={state.gender}>
-              {(value, { error }) => (
+          <FormField field={state.gender}>
+            {(value, { error }) => (
+              <Col>
                 <FormRow>
                   <SelectBox
                     error={error}
@@ -141,12 +141,12 @@ function EmployeeInfoForm() {
                     onChange={handleChange}
                   />
                 </FormRow>
-              )}
-            </FormField>
-          </Col>
-          <Col>
-            <FormField field={state.birthday}>
-              {(value, { error }) => (
+              </Col>
+            )}
+          </FormField>
+          <FormField field={state.birthday}>
+            {(value, { error }) => (
+              <Col>
                 <FormRow>
                   <InputDate
                     error={error}
@@ -157,12 +157,12 @@ function EmployeeInfoForm() {
                     onChange={handleChange}
                   />
                 </FormRow>
-              )}
-            </FormField>
-          </Col>
-          <Col>
-            <FormField field={state.phone}>
-              {(value, { error }) => (
+              </Col>
+            )}
+          </FormField>
+          <FormField field={state.phone}>
+            {(value, { error }) => (
+              <Col>
                 <FormRow>
                   <Input
                     error={error}
@@ -174,12 +174,12 @@ function EmployeeInfoForm() {
                     onChange={handleChange}
                   />
                 </FormRow>
-              )}
-            </FormField>
-          </Col>
-          <Col>
-            <FormField field={state.email}>
-              {(value, { error }) => (
+              </Col>
+            )}
+          </FormField>
+          <FormField field={state.email}>
+            {(value, { error }) => (
+              <Col>
                 <FormRow>
                   <Input
                     error={error}
@@ -190,9 +190,9 @@ function EmployeeInfoForm() {
                     onChange={handleChange}
                   />
                 </FormRow>
-              )}
-            </FormField>
-          </Col>
+              </Col>
+            )}
+          </FormField>
         </Row>
         <FormField field={state.address}>
           {(value, { error }) => (
