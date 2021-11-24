@@ -3,7 +3,7 @@ import { ArgsTable, Meta, Story, Canvas } from '@storybook/addon-docs/blocks'
 import InputSuggestComponent from '../components/InputSuggest'
 import { withValue } from '../hoc'
 
-import { getOptionsPosition } from '../api/hh'
+import { getPositions } from '../api/hh'
 
 <Meta title="Components/InputSuggest" component={InputSuggest} />
 
@@ -22,7 +22,7 @@ export const Template = (args) => <InputSuggest {...args} />
       label: 'Должность',
       minLengthToCallGet: 2,
       optionsToShow: 10,
-      getOptionsMethod: getOptionsPosition,
+      getOptionsMethod: getPositions,
     }}
   >
     {Template.bind({})}

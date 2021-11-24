@@ -1,4 +1,4 @@
-export const getOptionsPosition = (query, count) =>
+export const getPositions = (query, count) =>
   fetch(`https://api.hh.ru/suggests/positions/?text=${query}`, {
     method: 'get',
   })

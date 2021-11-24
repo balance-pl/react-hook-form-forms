@@ -358,11 +358,6 @@ class SelectBox extends Component {
 
     const inputClass = styles.SelectBox__Input
 
-    console.log({
-      isSuggestWrapperClosing,
-      isSuggestWrapperOpening,
-      isSuggestWrapperVisible,
-    })
     const suggestWrapperClass = cn(styles.SelectBox__SuggestWrapper, {
       [styles.SelectBox__SuggestWrapper_closing]: isSuggestWrapperClosing,
       [styles.SelectBox__SuggestWrapper_opening]: isSuggestWrapperOpening,
