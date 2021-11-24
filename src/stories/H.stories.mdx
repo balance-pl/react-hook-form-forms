@@ -1,0 +1,56 @@
+import { ArgsTable, Meta, Story, Canvas } from '@storybook/addon-docs/blocks'
+
+import H from '../components/H'
+
+<Meta title="Components/H" component={H} />
+
+export const Template = (args) => <H {...args} />
+
+## Примеры использования
+
+<Canvas>
+  <Story
+    name="Size=1"
+    args={{
+      children: 'Заголовок H1',
+      size: '1',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+  <Story
+    name="Size=2"
+    args={{
+      children: 'Заголовок H2',
+      size: '2',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+  <Story
+    name="Size=3"
+    args={{
+      children: 'Заголовок H3',
+      size: '3',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Свойства
+
+<ArgsTable of={H} />
+
+## CSS-классы
+
+```css
+.H {
+}
+.H_size_1 {
+}
+.H_size_2 {
+}
+.H_size_3 {
+}
+```

@@ -1,0 +1,45 @@
+import { ArgsTable, Meta, Story, Canvas } from '@storybook/addon-docs/blocks'
+
+import Button from '../components/Button'
+
+<Meta title="Components/Button" component={Button} />
+
+export const Template = (args) => <Button {...args} />
+
+## Примеры использования
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      children: 'Default',
+      variant: 'default',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+  <Story
+    name="Primary"
+    args={{
+      children: 'Primary',
+      variant: 'primary',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Свойства
+
+<ArgsTable of={Button} />
+
+## CSS-классы
+
+```css
+.Button {
+}
+.Button_variant_default {
+}
+.Button_variant_primary {
+}
+```

@@ -1,0 +1,49 @@
+@import "../../theme/variables.scss";
+
+.InputSuggest {
+  background-color: $color-white;
+  position: relative;
+}
+
+.InputSuggest__Input {
+  input {
+    background: transparent;
+    padding-right: 50px;
+  }
+}
+
+.InputSuggest__SuggestWrapper {
+  background-color: $color-white;
+  border: 1px solid $color-grey;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: none;
+  max-height: 228px;
+  opacity: 1;
+  overflow: hidden;
+  position: absolute;
+  top: 52px;
+  transition: margin 0.2s ease, opacity 0.2s ease;
+  width: 100%;
+  z-index: 2;
+
+  &_closing {
+    opacity: 0;
+  }
+
+  &_opening {
+    margin-top: 10px;
+    opacity: 0;
+  }
+
+  &_visible {
+    display: block;
+  }
+}
+
+.InputSuggest__Suggest {
+  max-height: 228px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  width: calc(100% + 20px);
+}

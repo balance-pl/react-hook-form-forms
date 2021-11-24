@@ -1,0 +1,65 @@
+import { ArgsTable, Meta, Story, Canvas } from '@storybook/addon-docs/blocks'
+
+import SelectBoxComponent from '../components/SelectBox'
+import { withValue } from '../hoc'
+
+import countries from '../json/countries.json'
+
+<Meta title="Components/SelectBox" component={SelectBox} />
+
+export const SelectBox = withValue(SelectBoxComponent)
+SelectBox.displayName = 'SelectBox'
+
+export const Template = (args) => <SelectBox {...args} />
+
+## Примеры использования
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      error: '',
+      label: 'Страна',
+      notFoundText: 'Совпадений не найдено',
+      options: countries,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Свойства
+
+<ArgsTable of={SelectBox} />
+
+## CSS-классы
+
+```css
+.SelectBox {
+}
+
+.SelectBox__Icon {
+}
+.SelectBox__Icon svg {
+}
+
+.SelectBox__Input {
+}
+.SelectBox__Input input {
+}
+
+.SelectBox__SuggestWrapper {
+}
+.SelectBox__SuggestWrapper_closing {
+}
+.SelectBox__SuggestWrapper_opening {
+}
+.SelectBox__SuggestWrapper_visible {
+}
+
+.SelectBox__Suggest {
+}
+
+.SelectBox__NotFound {
+}
+```

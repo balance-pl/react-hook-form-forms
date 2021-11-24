@@ -1,0 +1,53 @@
+import { ArgsTable, Meta, Story, Canvas } from '@storybook/addon-docs/blocks'
+
+import CheckboxComponent from '../components/Checkbox'
+import { withValue } from '../hoc'
+
+<Meta title="Components/Checkbox" component={Checkbox} />
+
+export const Checkbox = withValue(CheckboxComponent, 'checked', false)
+Checkbox.displayName = 'Checkbox'
+
+export const Template = (args) => <Checkbox {...args} />
+
+## Примеры использования
+
+<Canvas>
+  <Story
+    name="Unchecked"
+    args={{
+      checked: false,
+      children: 'Unchecked',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+  <Story
+    name="Checked"
+    args={{
+      checked: true,
+      children: 'Checked',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Свойства
+
+<ArgsTable of={Checkbox} />
+
+## CSS-классы
+
+```css
+.Checkbox {
+}
+.Checkbox__Label {
+}
+.Checkbox__Label_checked {
+}
+.Checkbox__Label::after {
+}
+.Checkbox__Label::before {
+}
+```

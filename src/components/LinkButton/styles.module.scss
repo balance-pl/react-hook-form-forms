@@ -1,0 +1,12 @@
+.LinkButton {
+  background-color: transparent;
+  border: none;
+  border-bottom: dashed 1px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+
+  &:hover {
+    border-bottom-color: transparent;
+  }
+}

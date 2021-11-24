@@ -1,0 +1,60 @@
+@import "../../theme/variables.scss";
+
+.Checkbox {
+  display: block;
+}
+
+.Checkbox__Label {
+  display: block;
+  min-height: 20px;
+  padding-left: 28px;
+  position: relative;
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  &::after {
+    border-bottom: 2px solid $color-white;
+    border-left: 2px solid $color-white;
+    content: "";
+    display: none;
+    height: 5px;
+    left: 5px;
+    position: absolute;
+    top: 5px;
+    transform: rotate(-45deg);
+    width: 9px;
+  }
+
+  &::before {
+    border: 1px solid $color-grey;
+    border-radius: 2px;
+    box-sizing: border-box;
+    content: "";
+    cursor: pointer;
+    height: 20px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 20px;
+  }
+
+  &:hover {
+    &::before {
+      border-color: darken($color-grey, 10%);
+    }
+  }
+
+  &_checked,
+  &_checked:hover {
+    &::after {
+      display: block;
+    }
+
+    &::before {
+      background-color: $color-primary;
+      border-color: $color-primary;
+    }
+  }
+}

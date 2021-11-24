@@ -1,0 +1,68 @@
+import { ArgsTable, Meta, Story, Canvas } from '@storybook/addon-docs/blocks'
+
+import InputComponent from '../components/Input'
+import { withValue } from '../hoc'
+
+<Meta title="Components/Input" component={Input} />
+
+export const Input = withValue(InputComponent)
+Input.displayName = 'Input'
+
+export const Template = (args) => <Input {...args} />
+
+## Примеры использования
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      label: 'Email',
+      value: '',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+  <Story
+    name="Mask"
+    args={{
+      label: 'Телефон',
+      mask: '+7 (999) 999-99-99',
+      value: '',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+  <Story
+    name="With error"
+    args={{
+      error: 'Поле не может быть пустым',
+      label: 'Email',
+      value: '',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Свойства
+
+<ArgsTable of={Input} />
+
+## CSS-классы
+
+```css
+.Input {
+}
+.Input__Label {
+}
+.Input__LabelText {
+}
+.Input__LabelText_top {
+}
+.Input__Input {
+}
+.Input__Input_error {
+}
+.Input__Error {
+}
+```

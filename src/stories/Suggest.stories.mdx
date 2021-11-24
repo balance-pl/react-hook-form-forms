@@ -1,0 +1,47 @@
+import { ArgsTable, Meta, Story, Canvas } from '@storybook/addon-docs/blocks'
+
+import Suggest from '../components/Suggest'
+
+import countries from '../json/countries.json'
+
+<Meta title="Components/Suggest" component={Suggest} />
+
+export const Template = (args) => <Suggest {...args} />
+
+## Примеры использования
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      activeOptionId: countries[0].id,
+      options: countries,
+      optionSearchMask: '',
+      value: countries[2].id,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Свойства
+
+<ArgsTable of={Suggest} />
+
+## CSS-классы
+
+```css
+.Suggest {
+}
+.Suggest__Options {
+}
+.Suggest__Option {
+}
+
+.Option {
+}
+.Option_active {
+}
+.Option_value {
+}
+```

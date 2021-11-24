@@ -1,0 +1,33 @@
+@import "../../theme/variables.scss";
+
+.Option {
+  cursor: pointer;
+  margin: 0;
+  padding: 9px 15px 10px;
+
+  i {
+    color: $color-primary;
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  &_active,
+  &_value {
+    i {
+      color: inherit;
+    }
+  }
+
+  &_active {
+    background-color: lighten($color-grey, 25%);
+  }
+
+  &_value {
+    background-color: $color-primary;
+    color: $color-white;
+
+    i {
+      color: inherit;
+    }
+  }
+}

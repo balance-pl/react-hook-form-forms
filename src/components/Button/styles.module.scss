@@ -1,0 +1,33 @@
+@import "../../theme/variables.scss";
+
+.Button {
+  background-color: transparent;
+  border: 1px solid;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  font-size: 16px;
+  padding: 15px;
+  text-align: center;
+}
+
+.Button_variant_default {
+  background-color: $color-white;
+  border-color: $color-grey;
+  color: $color-black;
+
+  &:hover {
+    border-color: darken($color-grey, 10%);
+  }
+}
+
+.Button_variant_primary {
+  background-color: $color-primary;
+  border-color: $color-primary;
+  color: $color-white;
+
+  &:hover {
+    background-color: darken($color-primary, 10%);
+    border-color: darken($color-primary, 10%);
+  }
+}

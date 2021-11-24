@@ -1,0 +1,38 @@
+import { ArgsTable, Meta, Story, Canvas } from '@storybook/addon-docs/blocks'
+
+import InputDateComponent from '../components/InputDate'
+import { withValue } from '../hoc'
+
+<Meta title="Components/InputDate" component={InputDate} />
+
+export const InputDate = withValue(InputDateComponent)
+InputDate.displayName = 'InputDate'
+
+export const Template = (args) => <InputDate {...args} />
+
+## Примеры использования
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      label: 'Дата',
+      value: '',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Свойства
+
+<ArgsTable of={InputDate} />
+
+## CSS-классы
+
+```css
+.InputDate {
+}
+.InputDate__Icon {
+}
+```

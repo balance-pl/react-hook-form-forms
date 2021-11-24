@@ -1,0 +1,21 @@
+@import "../../theme/variables.scss";
+
+.InputDate {
+  position: relative;
+
+  input {
+    padding-right: 65px;
+  }
+}
+
+.InputDate__Icon {
+  align-items: center;
+  color: $color-grey;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50px;
+}

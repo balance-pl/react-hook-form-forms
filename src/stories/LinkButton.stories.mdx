@@ -1,0 +1,31 @@
+import { ArgsTable, Meta, Story, Canvas } from '@storybook/addon-docs/blocks'
+
+import LinkButton from '../components/LinkButton'
+
+<Meta title="Components/LinkButton" component={LinkButton} />
+
+export const Template = (args) => <LinkButton {...args} />
+
+## Примеры использования
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      children: 'LinkButton',
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Свойства
+
+<ArgsTable of={LinkButton} />
+
+## CSS-классы
+
+```css
+.LinkButton {
+}
+```

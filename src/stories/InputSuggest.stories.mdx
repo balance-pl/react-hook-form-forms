@@ -1,0 +1,53 @@
+import { ArgsTable, Meta, Story, Canvas } from '@storybook/addon-docs/blocks'
+
+import InputSuggestComponent from '../components/InputSuggest'
+import { withValue } from '../hoc'
+
+import { getOptionsPosition } from '../api/hh'
+
+<Meta title="Components/InputSuggest" component={InputSuggest} />
+
+export const InputSuggest = withValue(InputSuggestComponent)
+InputSuggest.displayName = 'InputSuggest'
+
+export const Template = (args) => <InputSuggest {...args} />
+
+## Примеры использования
+
+<Canvas>
+  <Story
+    name="Default"
+    args={{
+      error: '',
+      label: 'Должность',
+      minLengthToCallGet: 2,
+      optionsToShow: 10,
+      getOptionsMethod: getOptionsPosition,
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Свойства
+
+<ArgsTable of={InputSuggest} />
+
+## CSS-классы
+
+```css
+.InputSuggest {
+}
+.InputSuggest__Input {
+}
+.InputSuggest__SuggestWrapper {
+}
+.InputSuggest__SuggestWrapper_closing {
+}
+.InputSuggest__SuggestWrapper_opening {
+}
+.InputSuggest__SuggestWrapper_visible {
+}
+.InputSuggest__Suggest {
+}
+```

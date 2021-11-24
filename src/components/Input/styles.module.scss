@@ -1,0 +1,54 @@
+@import "../../theme/variables.scss";
+
+.Input {
+  width: 100%;
+}
+
+.Input__Label {
+  display: block;
+  position: relative;
+}
+
+.Input__LabelText {
+  font-size: 16px;
+  left: 16px;
+  opacity: 0.6;
+  position: absolute;
+  top: 16px;
+  transition: top 0.1s ease-in, font-size 0.1s ease-in;
+
+  &_top {
+    font-size: 12px;
+    top: 7px;
+  }
+}
+
+.Input__Input {
+  border: 1px solid $color-grey;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: block;
+  font-size: 16px;
+  padding: 24px 15px 6px;
+  width: 100%;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:not(&_error) {
+    &:focus {
+      border-color: darken($color-grey, 10%);
+    }
+  }
+
+  &_error {
+    border-color: $color-red;
+  }
+}
+
+.Input__Error {
+  color: $color-red;
+  font-size: 12px;
+  margin-top: 4px;
+}
