@@ -1,0 +1,14 @@
+.LoginForm {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+
+  h1 {
+    text-align: center;
+  }
+}
+
+.LoginForm__Fields {
+  width: 400px;
+}

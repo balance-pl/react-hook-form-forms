@@ -1,0 +1,71 @@
+@import "./theme/variables.scss";
+
+.App {
+  display: flex;
+  min-height: 100vh;
+}
+
+.App__Sidebar {
+  width: 300px;
+}
+
+.App__Content {
+  flex-grow: 1;
+  max-width: 100%;
+  padding-top: 30px;
+}
+
+.App__Container {
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 100%;
+  width: 890px;
+}
+
+.Menu {
+  padding: 30px 0;
+}
+
+.Menu__Item {
+  color: $color-primary;
+  display: block;
+  padding: 10px 30px;
+  text-decoration: none;
+
+  &_active {
+    background-color: $color-primary;
+    color: $color-white;
+  }
+
+  &:not(&_active) {
+    &:hover {
+      background-color: rgba($color-primary, 0.1);
+    }
+  }
+}
+
+.SuspenseFallback {
+  display: flex;
+  justify-content: center;
+  padding: 30px 0;
+}
+
+.SuspenseFallback__Loader {
+  animation: spin_animation 0.8s linear infinite;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  border-top-color: $color-grey;
+  box-sizing: border-box;
+  height: 40px;
+  width: 40px;
+}
+
+@keyframes spin_animation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
