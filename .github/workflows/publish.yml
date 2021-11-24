@@ -1,0 +1,12 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    uses: crazy-max/ghaction-github-pages@v2.5.0
+    with:
+      verbose: true
