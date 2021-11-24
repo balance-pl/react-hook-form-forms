@@ -73,7 +73,7 @@ function ContractorDataForm() {
   return (
     <FormStateProvider state={state}>
       <form autoComplete="off" onSubmit={handleSubmit}>
-        <H size="1">Информация о сотруднике</H>
+        <H size="1">Данные исполнителя</H>
         <Row>
           <FormField field={state.surname}>
             {(value, { error }) => (
