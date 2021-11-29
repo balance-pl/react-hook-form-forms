@@ -1,11 +1,5 @@
-import {
-  createFormField,
-  createFormState,
-  FormField,
-  FormStateProvider,
-  useFormState,
-  Validations,
-} from '@balance-pl/form-state'
+import React from 'react'
+import { useForm, Controller } from 'react-hook-form'
 
 // Components
 import Button from '../../components/Button'
@@ -15,73 +9,67 @@ import Input from '../../components/Input'
 
 import styles from './styles.module.scss'
 
-const INITIAL_STATE = createFormState({
-  email: createFormField({
-    validations: [Validations.required, Validations.email],
-  }),
-  password: createFormField({
-    validations: [Validations.required],
-  }),
-})
+// const customValidation = (value) => {
+//   console.log('value -> ', value)
+//
+//   if (!value) {
+//     return 'Обязательное поле'
+//   }
+//   return null
+// }
 
 function LoginForm() {
-  const [state, actions] = useFormState(INITIAL_STATE)
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    resolver: (values) => {
+      return {
+        // TODO - можно придумать резолвер...
+        errors: {
+          email: '123',
+        },
+        values: {
+          ...values,
+        },
+      }
+    },
+  })
 
-  // Handlers
-  function handleBlur() {
-    if (state.isValidated) {
-      actions.validateState(state)
-    }
-  }
-  function handleChange(value, { name: field }) {
-    actions.changeField(field, value)
-  }
-  function handleSubmit(e) {
-    e.preventDefault()
-    const validatedState = actions.validateState(state)
-    if (validatedState.isValid()) {
-      alert('Sending the form...')
-    }
+  const onSubmit = (data) => {
+    console.log('Отправлено -> ', data)
   }
 
   return (
-    <FormStateProvider state={state}>
-      <form className={styles.LoginForm} onSubmit={handleSubmit}>
-        <div className={styles.LoginForm__Fields}>
-          <H size="1">Вход в систему</H>
-          <FormField field={state.email}>
-            {(value, { error }) => (
-              <FormRow>
-                <Input
-                  error={error}
-                  label="Email"
-                  name="email"
-                  value={value}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                />
-              </FormRow>
+    <form
+      autoComplete="on"
+      className={styles.LoginForm}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <div className={styles.LoginForm__Fields}>
+        <H size="1">Вход в систему</H>
+        <FormRow>
+          <Controller
+            name="email"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Input label="Email" {...field} error={fieldState.error} />
             )}
-          </FormField>
-          <FormField field={state.password}>
-            {(value, { error }) => (
-              <FormRow>
-                <Input
-                  error={error}
-                  label="Пароль"
-                  name="password"
-                  type="password"
-                  value={value}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                />
-              </FormRow>
+          />
+        </FormRow>
+        <FormRow>
+          <Controller
+            name="password"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Input label="Пароль" type="password" {...field} />
             )}
-          </FormField>
-          <Button variant="primary">Войти</Button>
-        </div>
-      </form>
-    </FormStateProvider>
+          />
+        </FormRow>
+        <Button variant="primary">Войти</Button>
+      </div>
+    </form>
   )
 }
 

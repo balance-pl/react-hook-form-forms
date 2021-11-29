@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { useState, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import InputMask from 'react-input-mask'
 import cn from 'classnames'
 
 import styles from './styles.module.scss'
 
-function Input(props) {
+// eslint-disable-next-line react/display-name
+const Input = forwardRef((props, ref) => {
   const {
     error,
     label,
@@ -47,6 +48,7 @@ function Input(props) {
   const inputProps = {
     ...otherProps,
     className: inputClass,
+    ref,
     value: value || '',
     onBlur: handleBlur,
     onChange: handleChange,
@@ -63,7 +65,7 @@ function Input(props) {
       {!!error && <div className={styles.Input__Error}>{error}</div>}
     </div>
   )
-}
+})
 
 Input.propTypes = {
   error: PropTypes.string,
