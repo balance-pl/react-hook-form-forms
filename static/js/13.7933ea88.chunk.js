@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-hook-form-forms"]=this["webpackJsonpreact-hook-form-forms"]||[]).push([[13],{212:function(o,r,t){"use strict";t.r(r);var s=t(1);r.default=function(){return Object(s.jsx)("form",{children:"RegistrationForm"})}}}]);
+//# sourceMappingURL=13.7933ea88.chunk.js.map

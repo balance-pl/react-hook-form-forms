@@ -1,1 +1,0 @@
-{"version":3,"sources":["forms/PropertyForm/index.jsx"],"names":["PropertyForm"],"mappings":"+IAIeA,UAJf,WACE,OAAO","file":"static/js/12.bdf3930d.chunk.js","sourcesContent":["function PropertyForm() {\n  return <form>PropertyForm</form>\n}\n\nexport default PropertyForm\n"],"sourceRoot":""}

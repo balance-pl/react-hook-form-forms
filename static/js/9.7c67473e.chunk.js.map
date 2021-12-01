@@ -1,1 +1,0 @@
-{"version":3,"sources":["forms/ChangeClientDataAdvancedForm/index.jsx"],"names":["ChangeClientDataAdvancedForm"],"mappings":"8IAIeA,UAJf,WACE,OAAO","file":"static/js/9.7c67473e.chunk.js","sourcesContent":["function ChangeClientDataAdvancedForm() {\n  return <form>ChangeClientDataAdvancedForm</form>\n}\n\nexport default ChangeClientDataAdvancedForm\n"],"sourceRoot":""}
