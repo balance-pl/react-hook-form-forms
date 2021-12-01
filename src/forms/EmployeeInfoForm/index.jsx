@@ -80,9 +80,11 @@ const employerSchema = yup.object({
 })
 
 function EmployeeInfoForm() {
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, watch } = useForm({
     resolver: yupResolver(employerSchema),
   })
+
+  console.log("watch('phone') -> ", watch('phone'))
 
   const onSubmit = (data) => {
     alert(JSON.stringify(data))

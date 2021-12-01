@@ -47,13 +47,15 @@ function LoginForm() {
           <Controller
             name="email"
             control={control}
-            render={({ field, fieldState }) => (
-              <Input
-                label="Email"
-                {...field}
-                error={fieldState.error?.message}
-              />
-            )}
+            render={({ field, fieldState }) => {
+              return (
+                <Input
+                  label="Email"
+                  {...field}
+                  error={fieldState.error?.message}
+                />
+              )
+            }}
           />
         </FormRow>
         <FormRow>

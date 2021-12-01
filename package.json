@@ -2,6 +2,7 @@
   "name": "form-state-forms",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://balance-pl.github.io/react-hook-form-forms/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
