@@ -1,0 +1,1 @@
+{"version":3,"sources":["forms/RegistrationForm/index.jsx"],"names":["RegistrationForm"],"mappings":"+IAIeA,UAJf,WACE,OAAO","file":"static/js/13.99f4a140.chunk.js","sourcesContent":["function RegistrationForm() {\n  return <form>RegistrationForm</form>\n}\n\nexport default RegistrationForm\n"],"sourceRoot":""}

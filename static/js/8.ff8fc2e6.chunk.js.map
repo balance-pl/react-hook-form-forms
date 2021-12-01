@@ -1,0 +1,1 @@
+{"version":3,"sources":["forms/BorrowerPassportForm/index.jsx"],"names":["BorrowerPassportForm"],"mappings":"8IAIeA,UAJf,WACE,OAAO","file":"static/js/8.ff8fc2e6.chunk.js","sourcesContent":["function BorrowerPassportForm() {\n  return <form>BorrowerPassportForm</form>\n}\n\nexport default BorrowerPassportForm\n"],"sourceRoot":""}
