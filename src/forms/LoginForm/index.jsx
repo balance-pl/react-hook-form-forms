@@ -4,6 +4,12 @@ import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
+// Constants
+import {
+  ERROR_MESSAGE_INVALID_EMAIL,
+  REQUIRED_MESSAGE,
+} from '../../constants/errors'
+
 // Components
 import Button from '../../components/Button'
 import FormRow from '../../components/FormRow'
@@ -11,10 +17,6 @@ import H from '../../components/H'
 import Input from '../../components/Input'
 
 import styles from './styles.module.scss'
-
-export const ERROR_MESSAGE_INVALID_EMAIL =
-  'Введите e-mail в формате example@example.com'
-const REQUIRED_MESSAGE = 'Обязательное поле'
 
 const loginSchema = yup.object({
   email: yup
@@ -25,11 +27,7 @@ const loginSchema = yup.object({
 })
 
 function LoginForm() {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { control, handleSubmit } = useForm({
     resolver: yupResolver(loginSchema),
   })
 
@@ -39,7 +37,7 @@ function LoginForm() {
 
   return (
     <form
-      autoComplete="on"
+      autoComplete="off"
       className={styles.LoginForm}
       onSubmit={handleSubmit(onSubmit)}
     >
@@ -50,7 +48,11 @@ function LoginForm() {
             name="email"
             control={control}
             render={({ field, fieldState }) => (
-              <Input label="Email" {...field} error={errors.email?.message} />
+              <Input
+                label="Email"
+                {...field}
+                error={fieldState.error?.message}
+              />
             )}
           />
         </FormRow>
@@ -63,7 +65,7 @@ function LoginForm() {
                 label="Пароль"
                 type="password"
                 {...field}
-                error={errors.password?.message}
+                error={fieldState.error?.message}
               />
             )}
           />
