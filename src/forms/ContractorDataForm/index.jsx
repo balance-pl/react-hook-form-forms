@@ -1,3 +1,7 @@
+import { Controller, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+
 // API
 import {
   getAddresses,
@@ -13,59 +17,124 @@ import { Col, Row } from '../../components/Grid'
 import H from '../../components/H'
 import InputSuggest from '../../components/InputSuggest'
 import SelectBox from '../../components/SelectBox'
+import { REQUIRED_MESSAGE } from '../../constants/errors'
+
+const NATIVE_CITIZEN = 1
+const FOREIGN_CITIZEN = 2
+
+const ContractorSchema = yup.object({
+  surname: yup.string().required(REQUIRED_MESSAGE),
+  name: yup.string().required(REQUIRED_MESSAGE),
+  cityzenship: yup.string().required(REQUIRED_MESSAGE),
+  address: yup.string().when('cityzenship', {
+    is: (val) => val === String(NATIVE_CITIZEN),
+    then: yup.string().required(REQUIRED_MESSAGE),
+  }),
+})
 
 function ContractorDataForm() {
+  const { control, handleSubmit, watch } = useForm({
+    resolver: yupResolver(ContractorSchema),
+  })
+
+  const onSubmit = (data) => {
+    alert(JSON.stringify(data))
+  }
+
+  const isNativeCitizen = watch('cityzenship') === NATIVE_CITIZEN
+
   return (
-    <form autoComplete="off">
+    <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
       <H size="1">Данные исполнителя</H>
       <Row>
         <Col>
           <FormRow>
-            <InputSuggest
-              getOptionsMethod={getSurnames}
-              label="Фамилия *"
+            <Controller
+              control={control}
               name="surname"
+              render={({ field, fieldState }) => (
+                <InputSuggest
+                  {...field}
+                  getOptionsMethod={getSurnames}
+                  label="Фамилия *"
+                  error={fieldState.error?.message}
+                />
+              )}
             />
           </FormRow>
         </Col>
         <Col>
           <FormRow>
-            <InputSuggest
-              getOptionsMethod={getNames}
-              label="Имя *"
+            <Controller
+              control={control}
               name="name"
+              render={({ field, fieldState }) => (
+                <InputSuggest
+                  {...field}
+                  getOptionsMethod={getNames}
+                  label="Имя *"
+                  error={fieldState.error?.message}
+                />
+              )}
             />
           </FormRow>
         </Col>
         <Col>
           <FormRow>
-            <InputSuggest
-              getOptionsMethod={getPatronymics}
-              label="Отчество"
+            <Controller
+              control={control}
               name="patronymic"
+              render={({ field, fieldState }) => (
+                <InputSuggest
+                  {...field}
+                  getOptionsMethod={getPatronymics}
+                  label="Отчество"
+                  error={fieldState.error?.message}
+                />
+              )}
             />
           </FormRow>
         </Col>
         <Col>
           <FormRow>
-            <SelectBox
-              label="Гражданство *"
+            <Controller
               name="cityzenship"
-              options={[
-                { id: 1, name: 'Гражданство РФ' },
-                { id: 2, name: 'Иностранный гражданин' },
-              ]}
+              control={control}
+              render={({ field, fieldState, formState }) => {
+                return (
+                  <SelectBox
+                    {...field}
+                    label="Гражданство *"
+                    name="cityzenship"
+                    options={[
+                      { id: NATIVE_CITIZEN, name: 'Гражданство РФ' },
+                      { id: FOREIGN_CITIZEN, name: 'Иностранный гражданин' },
+                    ]}
+                    error={fieldState.error?.message}
+                  />
+                )
+              }}
             />
           </FormRow>
         </Col>
       </Row>
-      <FormRow>
-        <InputSuggest
-          getOptionsMethod={getAddresses}
-          label="Адрес регистрации *"
-          name="address"
-        />
-      </FormRow>
+      {isNativeCitizen && (
+        <FormRow>
+          <Controller
+            shouldUnregister
+            control={control}
+            name="address"
+            render={({ field, fieldState }) => (
+              <InputSuggest
+                {...field}
+                getOptionsMethod={getAddresses}
+                label="Адрес регистрации *"
+                error={fieldState.error?.message}
+              />
+            )}
+          />
+        </FormRow>
+      )}
       <Row>
         <Col />
         <Col>
