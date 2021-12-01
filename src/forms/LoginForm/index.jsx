@@ -1,5 +1,8 @@
 import React from 'react'
-import { useForm, Controller } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
+
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 // Components
 import Button from '../../components/Button'
@@ -9,36 +12,29 @@ import Input from '../../components/Input'
 
 import styles from './styles.module.scss'
 
-// const customValidation = (value) => {
-//   console.log('value -> ', value)
-//
-//   if (!value) {
-//     return 'Обязательное поле'
-//   }
-//   return null
-// }
+export const ERROR_MESSAGE_INVALID_EMAIL =
+  'Введите e-mail в формате example@example.com'
+const REQUIRED_MESSAGE = 'Обязательное поле'
+
+const loginSchema = yup.object({
+  email: yup
+    .string()
+    .email(ERROR_MESSAGE_INVALID_EMAIL)
+    .required(REQUIRED_MESSAGE),
+  password: yup.string().required(REQUIRED_MESSAGE),
+})
 
 function LoginForm() {
-  const { control, handleSubmit } = useForm({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-    resolver: (values) => {
-      return {
-        // TODO - можно придумать резолвер...
-        errors: {
-          email: '123',
-        },
-        values: {
-          ...values,
-        },
-      }
-    },
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(loginSchema),
   })
 
   const onSubmit = (data) => {
-    console.log('Отправлено -> ', data)
+    alert(JSON.stringify(data))
   }
 
   return (
@@ -54,7 +50,7 @@ function LoginForm() {
             name="email"
             control={control}
             render={({ field, fieldState }) => (
-              <Input label="Email" {...field} error={fieldState.error} />
+              <Input label="Email" {...field} error={errors.email?.message} />
             )}
           />
         </FormRow>
@@ -63,7 +59,12 @@ function LoginForm() {
             name="password"
             control={control}
             render={({ field, fieldState }) => (
-              <Input label="Пароль" type="password" {...field} />
+              <Input
+                label="Пароль"
+                type="password"
+                {...field}
+                error={errors.password?.message}
+              />
             )}
           />
         </FormRow>
