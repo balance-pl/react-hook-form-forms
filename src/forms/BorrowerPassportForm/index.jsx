@@ -37,6 +37,7 @@ function BorrowerPassportForm() {
     },
     resolver: yupResolver(schema),
   })
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'passports',
