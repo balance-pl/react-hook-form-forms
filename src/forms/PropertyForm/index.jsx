@@ -1,5 +1,7 @@
 import React from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 import H from '../../components/H'
 import SelectBox from '../../components/SelectBox'
@@ -9,6 +11,11 @@ import FormRow from '../../components/FormRow'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
 import LinkButton from '../../components/LinkButton'
+import IconDelete from '../../components/IconDelete'
+
+import { REQUIRED_MESSAGE } from '../../constants/errors'
+
+import styles from './style.module.scss'
 
 const sellerTypes = [
   {
@@ -20,6 +27,7 @@ const sellerTypes = [
     name: 'Продавец 2',
   },
 ]
+
 const purchaseOfAgreement = [
   {
     id: 1,
@@ -30,6 +38,7 @@ const purchaseOfAgreement = [
     name: 'Договор 2',
   },
 ]
+
 const creditFunds = [
   {
     id: 1,
@@ -49,8 +58,24 @@ const initialSellerData = {
   email: undefined,
 }
 
+const schema = yup.object({
+  object: yup.object().shape({
+    sellerType: yup.string().required(REQUIRED_MESSAGE),
+    purchaseAgreement: yup.string().required(REQUIRED_MESSAGE),
+    gettingOfCreditFunds: yup.string().required(REQUIRED_MESSAGE),
+  }),
+  sellers: yup.array().of(
+    yup.object().shape({
+      surname: yup.string().required(REQUIRED_MESSAGE),
+      name: yup.string().required(REQUIRED_MESSAGE),
+    })
+  ),
+  inn: yup.string().required(REQUIRED_MESSAGE),
+})
+
 function PropertyForm() {
-  const { control } = useForm({
+  const { control, handleSubmit, trigger, getValues } = useForm({
+    resolver: yupResolver(schema),
     defaultValues: {
       // Объект
       object: {
@@ -59,7 +84,6 @@ function PropertyForm() {
         gettingOfCreditFunds: undefined,
         creditingOfCreditFunds: undefined,
       },
-
       // Продавцы
       sellers: [initialSellerData],
 
@@ -74,26 +98,44 @@ function PropertyForm() {
     name: 'sellers',
   })
 
+  const onSubmit = (data) => {
+    console.log('main submit -> ', data)
+  }
+
+  const submitObjectData = async (e) => {
+    e.preventDefault()
+    const isValid = await trigger('object')
+    if (isValid) {
+      const objectData = getValues('object')
+      alert(objectData)
+    }
+  }
+
+  const submitSellerData = (index) => async () => {
+    const isValid = await trigger(`sellers.${index}`)
+    if (isValid) {
+      const data = getValues(`sellers.${index}`)
+      console.log('save seller data ->', data)
+    }
+  }
+
   return (
     <div>
       <H size={1}>Объект</H>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-        }}
-      >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <FormRow>
           <Row>
             <Col>
               <Controller
                 control={control}
                 name="object.sellerType"
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <SelectBox
                     {...field}
                     label="Тип продавца *"
                     options={sellerTypes}
+                    error={fieldState.error?.message}
                   />
                 )}
               />
@@ -102,11 +144,12 @@ function PropertyForm() {
               <Controller
                 control={control}
                 name="object.purchaseAgreement"
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <SelectBox
                     {...field}
                     label="Договор приобретения *"
                     options={purchaseOfAgreement}
+                    error={fieldState.error?.message}
                   />
                 )}
               />
@@ -119,11 +162,12 @@ function PropertyForm() {
               <Controller
                 control={control}
                 name="object.gettingOfCreditFunds"
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <SelectBox
                     {...field}
                     label="Получение кредитных средств *"
                     options={creditFunds}
+                    error={fieldState.error?.message}
                   />
                 )}
               />
@@ -147,7 +191,9 @@ function PropertyForm() {
           <Row>
             <Col />
             <Col>
-              <Button variant="default">Сохранить</Button>
+              <Button variant="default" onClick={submitObjectData}>
+                Сохранить
+              </Button>
             </Col>
           </Row>
         </FormRow>
@@ -167,44 +213,37 @@ function PropertyForm() {
                       <Controller
                         control={control}
                         name={`sellers.${index}.surname`}
-                        render={({ field }) => (
-                          <Input {...field} label="Фамилия *" />
+                        render={({ field, fieldState }) => (
+                          <Input
+                            {...field}
+                            label="Фамилия *"
+                            error={fieldState.error?.message}
+                          />
                         )}
                       />
                     </Col>
 
                     <Col>
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}
-                      >
+                      <div className={styles.PropertyForm__IconWrapper}>
                         <Controller
                           control={control}
                           name={`sellers.${index}.name`}
-                          render={({ field }) => (
-                            <Input {...field} label="Имя *" />
+                          render={({ field, fieldState }) => (
+                            <Input
+                              {...field}
+                              label="Имя *"
+                              error={fieldState.error?.message}
+                            />
                           )}
                         />
 
                         {fields.length > 1 && (
-                          <div
-                            style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              marginLeft: 25,
-                              cursor: 'pointer',
-                              color: 'red',
-                              fontSize: '25px',
-                            }}
+                          <IconDelete
+                            className={styles.PropertyForm__IconDelete}
                             onClick={() => {
                               remove(index)
                             }}
-                          >
-                            X
-                          </div>
+                          />
                         )}
                       </div>
                     </Col>
@@ -244,7 +283,9 @@ function PropertyForm() {
                     />
                   </Col>
                   <Col>
-                    <Button>Сохранить</Button>
+                    <Button type="button" onClick={submitSellerData(index)}>
+                      Сохранить
+                    </Button>
                   </Col>
                 </Row>
               </div>
@@ -254,7 +295,7 @@ function PropertyForm() {
         })}
 
         <FormRow>
-          <LinkButton onClick={() => append(initialSellerData)}>
+          <LinkButton type="button" onClick={() => append(initialSellerData)}>
             Добавить продавца
           </LinkButton>
         </FormRow>
@@ -267,7 +308,13 @@ function PropertyForm() {
               <Controller
                 control={control}
                 name="inn"
-                render={({ field }) => <Input {...field} label="ИНН *" />}
+                render={({ field, fieldState }) => (
+                  <Input
+                    {...field}
+                    label="ИНН *"
+                    error={fieldState.error?.message}
+                  />
+                )}
               />
             </Col>
             <Col>
@@ -283,7 +330,9 @@ function PropertyForm() {
         <Row>
           <Col />
           <Col>
-            <Button variant="primary">Далее</Button>
+            <Button variant="primary" type="submit">
+              Далее
+            </Button>
           </Col>
         </Row>
       </form>

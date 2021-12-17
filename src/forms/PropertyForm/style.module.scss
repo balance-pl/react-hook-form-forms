@@ -1,0 +1,11 @@
+.PropertyForm {
+  &__IconWrapper {
+    position: relative;
+  }
+
+  &__IconDelete {
+    position: absolute;
+    right: -38px;
+    top: 13px;
+  }
+}

@@ -14,6 +14,9 @@ import InputDate from '../../components/InputDate'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import { REQUIRED_MESSAGE } from '../../constants/errors'
+import IconDelete from '../../components/IconDelete'
+
+import styles from './styles.module.scss'
 
 const schema = yup.object({
   passports: yup.array().of(
@@ -68,12 +71,7 @@ function BorrowerPassportForm() {
           return (
             <div key={field.id}>
               <FormRow>
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                >
+                <div className={styles.BorrowerPassportForm__IconWrapper}>
                   <Controller
                     name={`passports.${index}.serialNumber`}
                     control={control}
@@ -87,20 +85,10 @@ function BorrowerPassportForm() {
                     )}
                   />
                   {fields.length > 1 && (
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginLeft: 25,
-                        cursor: 'pointer',
-                        color: 'red',
-                        fontSize: '25px',
-                      }}
+                    <IconDelete
                       onClick={handleDelete(index)}
-                    >
-                      X
-                    </div>
+                      className={styles.BorrowerPassportForm__IconDelete}
+                    />
                   )}
                 </div>
               </FormRow>
