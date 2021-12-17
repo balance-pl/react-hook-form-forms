@@ -1,1 +1,0 @@
-{"version":3,"sources":["forms/ChangeClientDataForm/index.jsx"],"names":["ChangeClientDataForm"],"mappings":"yJAIeA,UAJf,WACE,OAAO","file":"static/js/10.ec590fd3.chunk.js","sourcesContent":["function ChangeClientDataForm() {\n  return <form>ChangeClientDataForm</form>\n}\n\nexport default ChangeClientDataForm\n"],"sourceRoot":""}
