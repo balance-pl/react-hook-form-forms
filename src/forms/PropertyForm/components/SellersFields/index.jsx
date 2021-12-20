@@ -22,7 +22,14 @@ function SellersForm({ control, submitSellerData }) {
 
   return (
     <>
-      <H size={2}>Продавцы</H>
+      <H
+        size={2}
+        style={{
+          marginBottom: 0,
+        }}
+      >
+        Продавцы
+      </H>
       {fields.map((field, index) => {
         return (
           <div key={field.id}>
@@ -91,7 +98,11 @@ function SellersForm({ control, submitSellerData }) {
                       control={control}
                       name={`sellers.${index}.phone`}
                       render={({ field }) => (
-                        <Input {...field} label="Телефон" />
+                        <Input
+                          {...field}
+                          label="Телефон"
+                          mask="+7 (999) 999-99-99"
+                        />
                       )}
                     />
                   </Col>
@@ -103,7 +114,13 @@ function SellersForm({ control, submitSellerData }) {
                   <Controller
                     control={control}
                     name={`sellers.${index}.email`}
-                    render={({ field }) => <Input {...field} label="Email" />}
+                    render={({ field, fieldState }) => (
+                      <Input
+                        {...field}
+                        label="Email"
+                        error={fieldState.error?.message}
+                      />
+                    )}
                   />
                 </Col>
                 <Col>

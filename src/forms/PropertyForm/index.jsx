@@ -14,7 +14,10 @@ import Input from '../../components/Input'
 import ObjectFields from './components/ObjectFields'
 import SellersFields from './components/SellersFields'
 
-import { REQUIRED_MESSAGE } from '../../constants/errors'
+import {
+  ERROR_MESSAGE_INVALID_EMAIL,
+  REQUIRED_MESSAGE,
+} from '../../constants/errors'
 
 export const initialSellerData = {
   surname: undefined,
@@ -41,6 +44,7 @@ const schema = yup.object({
     yup.object().shape({
       surname: yup.string().required(REQUIRED_MESSAGE),
       name: yup.string().required(REQUIRED_MESSAGE),
+      email: yup.string().email(ERROR_MESSAGE_INVALID_EMAIL),
     })
   ),
   inn: yup.string().required(REQUIRED_MESSAGE),
@@ -54,7 +58,6 @@ function PropertyForm() {
       object: initialObjectData,
       // Продавцы
       sellers: [initialSellerData],
-
       // Прочая информация
       inn: undefined,
       snils: undefined,
@@ -101,6 +104,7 @@ function PropertyForm() {
                   <Input
                     {...field}
                     label="ИНН *"
+                    mask="999999999999"
                     error={fieldState.error?.message}
                   />
                 )}
@@ -110,7 +114,9 @@ function PropertyForm() {
               <Controller
                 control={control}
                 name="snils"
-                render={({ field }) => <Input {...field} label="СНИЛС" />}
+                render={({ field }) => (
+                  <Input {...field} label="СНИЛС" mask="999-999-999 99" />
+                )}
               />
             </Col>
           </Row>
