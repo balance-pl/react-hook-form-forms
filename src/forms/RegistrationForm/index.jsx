@@ -45,13 +45,15 @@ const schema = yup.object({
   password: yup.string().required(REQUIRED_MESSAGE),
   nameOfTheLegalEntity: yup.string().required(REQUIRED_MESSAGE),
   phone: yup.string().required(REQUIRED_MESSAGE),
+  ogrn: yup.string().required(REQUIRED_MESSAGE),
 })
 
-const isExistDadata = (dadata = undefined) =>
+export const isExistDadata = (dadata = undefined) =>
   dadata && Object.keys(dadata).length > 0
 
 function RegistrationForm() {
   const { control, handleSubmit, setValue } = useForm({
+    mode: 'onChange',
     defaultValues: {
       email: undefined,
       password: undefined,
@@ -73,7 +75,7 @@ function RegistrationForm() {
   const handleLegalEntityChange = (field) => (value, _, dadata) => {
     if (isExistDadata(dadata)) {
       setValue('legalAddress', dadata.legalAddress)
-      setValue('ogrn', dadata.ogrn)
+      setValue('ogrn', dadata.ogrn, { shouldValidate: true })
       setValue('kpp', dadata.kpp)
       setValue('inn', dadata.inn)
       setValue('ceoFio', dadata.ceoFio)

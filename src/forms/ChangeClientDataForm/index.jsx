@@ -1,7 +1,7 @@
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
+import * as Yup from 'yup'
 
 import H from '../../components/H'
 import FormRow from '../../components/FormRow'
@@ -13,37 +13,85 @@ import Col from '../../components/Grid/Col'
 import Button from '../../components/Button'
 import { REQUIRED_MESSAGE } from '../../constants/errors'
 
-const schema = yup.object({
-  reasonOfLiving: yup.string().when('realAddress', {
-    is: (val) => !!val,
-    then: yup.string().required(REQUIRED_MESSAGE),
-  }),
+const getFakeOptions = () =>
+  Promise.resolve([
+    {
+      id: 1,
+      name: 'г. Москва, ул. Тверская, д.123',
+      data: {
+        house: 123,
+        street: 'Тверская',
+        city: 'Москва',
+      },
+    },
+    {
+      id: 2,
+      name: 'г. Калининград, ул. Какая-то, д.12',
+      data: {
+        house: 12,
+        street: 'Какая-то',
+        city: 'Калининград',
+      },
+    },
+  ])
 
-  // TODO - думаю над реализацией валидации по наличию дадаты...
-  // addressRegistration: yup.string().when('addressRegistration', {
-  //   is: (val) => {
-  //     console.log('validation check ->', val)
-  //     return true
-  //   },
-  //   then: yup.string().required(REQUIRED_MESSAGE),
-  // }),
+const FAKE_REASONS_FOR_LIVING = [
+  {
+    id: 1,
+    name: 'Аренда',
+  },
+  {
+    id: 2,
+    name: 'Проживание у родственников',
+  },
+]
+
+// const ADDRESS_NOT_FROM_DADATA_ERROR = 'Адрес должен быть из подсказки'
+// const validateAddressByDadata = object().test(
+//   'Проверка адреса по наличию дадаты',
+//   ADDRESS_NOT_FROM_DADATA_ERROR,
+//   ({ value, dadata }) => {
+//     if (value) {
+//       return isExistDadata(dadata)
+//     }
+//     return true
+//   }
+// )
+
+const schema = Yup.object({
+  reasonOfLiving: Yup.string().when(['realAddress', 'areTheSameAddresses'], {
+    is: ({ value }) => !!value,
+    then: Yup.string().required(REQUIRED_MESSAGE),
+    otherwise: Yup.string(),
+  }),
+  // addressRegistration: validateAddressByDadata,
+  // realAddress: validateAddressByDadata,
 })
 
 function ChangeClientDataForm() {
   const { control, watch, handleSubmit } = useForm({
     defaultValues: {
-      addressRegistration: undefined,
-      realAddress: undefined,
-      areTheSameAddresses: false,
-      reasonOfLiving: undefined,
+      addressRegistration: {
+        value: undefined,
+        dadata: undefined,
+      },
+      areTheSameAddresses: true,
     },
     resolver: yupResolver(schema),
   })
 
   const areTheSameAddresses = watch('areTheSameAddresses')
+  console.log('areTheSameAddresses -> ', areTheSameAddresses)
 
   const onSubmit = (data) => {
     console.log('success submitted -> ', data)
+  }
+
+  const handleAddressChange = (field) => (value, _, dadata) => {
+    field.onChange({
+      value,
+      dadata,
+    })
   }
 
   return (
@@ -58,6 +106,9 @@ function ChangeClientDataForm() {
             render={({ field, fieldState }) => (
               <InputSuggest
                 {...field}
+                getOptionsMethod={getFakeOptions}
+                onChange={handleAddressChange(field)}
+                value={field.value.value}
                 error={fieldState.error?.message}
                 label="Адрес регистрации"
               />
@@ -87,6 +138,9 @@ function ChangeClientDataForm() {
                 render={({ field, fieldState }) => (
                   <InputSuggest
                     {...field}
+                    getOptionsMethod={getFakeOptions}
+                    onChange={handleAddressChange(field)}
+                    value={field.value?.value}
                     error={fieldState.error?.message}
                     label="Адрес фактического проживания"
                   />
@@ -102,6 +156,7 @@ function ChangeClientDataForm() {
                 render={({ field, fieldState }) => (
                   <SelectBox
                     {...field}
+                    options={FAKE_REASONS_FOR_LIVING}
                     error={fieldState.error?.message}
                     label="Основание для проживания"
                   />

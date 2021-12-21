@@ -62,6 +62,7 @@ function PropertyForm() {
       inn: undefined,
       snils: undefined,
     },
+    mode: 'onChange',
   })
 
   const onSubmit = (data) => {
@@ -78,7 +79,9 @@ function PropertyForm() {
   }
 
   const submitSellerData = (index) => async () => {
-    const isValid = await trigger(`sellers.${index}`)
+    const isValid = await trigger(`sellers.${index}`, {
+      shouldFocus: true,
+    })
     if (isValid) {
       const data = getValues(`sellers.${index}`)
       console.log('save seller data ->', data)
@@ -103,8 +106,8 @@ function PropertyForm() {
                 render={({ field, fieldState }) => (
                   <Input
                     {...field}
+                    onBlur={field.onBlur}
                     label="ИНН *"
-                    mask="999999999999"
                     error={fieldState.error?.message}
                   />
                 )}
