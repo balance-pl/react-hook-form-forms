@@ -137,7 +137,7 @@ function SellersForm({ control, submitSellerData }) {
 
       <FormRow>
         <LinkButton type="button" onClick={() => append(initialSellerData)}>
-          Добавить продавца
+          + Добавить продавца
         </LinkButton>
       </FormRow>
     </>

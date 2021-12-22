@@ -1,0 +1,16 @@
+.ChangeClientDataAdvancedForm {
+  &__IconWrapper {
+    position: relative;
+  }
+
+  &__IconDelete {
+    position: absolute;
+    right: -38px;
+    top: 13px;
+  }
+
+  &__Separator {
+    border-bottom: 1px dashed #adb5bd;
+    margin: 30px 0;
+  }
+}

@@ -137,7 +137,7 @@ function BorrowerPassportForm() {
         <Row>
           <Col>
             <LinkButton type="button" variant="default" onClick={addFormArray}>
-              Добавить паспорт
+              + Добавить паспорт
             </LinkButton>
           </Col>
 
