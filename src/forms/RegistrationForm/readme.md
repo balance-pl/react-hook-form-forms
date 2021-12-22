@@ -1,3 +1,3 @@
 [Демо тут](https://balance-pl.github.io/react-hook-form-forms/#/registration-form)
 
-![](https://balance-pl.github.io/form-state-forms/registration-form.png)
+![](https://balance-pl.github.io/react-hook-form-forms/registration-form.png)
