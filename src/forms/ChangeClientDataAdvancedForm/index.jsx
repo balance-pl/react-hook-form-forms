@@ -13,50 +13,18 @@ import SelectBox from '../../components/SelectBox'
 import Row from '../../components/Grid/Row'
 import Col from '../../components/Grid/Col'
 import Button from '../../components/Button'
+import IconDelete from '../../components/IconDelete'
+import LinkButton from '../../components/LinkButton'
 
 import { isExistDadata } from '../RegistrationForm'
 
 import { REQUIRED_MESSAGE } from '../../constants/errors'
+import { FAKE_REASONS_FOR_LIVING, getFakeOptions } from '../../fakeData'
 
 import styles from './styles.module.scss'
-import IconDelete from '../../components/IconDelete'
-import LinkButton from '../../components/LinkButton'
-
-const getFakeOptions = () =>
-  Promise.resolve([
-    {
-      id: 1,
-      name: 'г. Москва, ул. Тверская, д.123',
-      data: {
-        house: 123,
-        street: 'Тверская',
-        city: 'Москва',
-      },
-    },
-    {
-      id: 2,
-      name: 'г. Калининград, ул. Какая-то, д.12',
-      data: {
-        house: 12,
-        street: 'Какая-то',
-        city: 'Калининград',
-      },
-    },
-  ])
-
-const FAKE_REASONS_FOR_LIVING = [
-  {
-    id: 1,
-    name: 'Аренда',
-  },
-  {
-    id: 2,
-    name: 'Проживание у родственников',
-  },
-]
 
 const ADDRESS_NOT_FROM_DADATA_ERROR = 'Адрес должен быть из подсказки'
-const validateAddressByDadata = object().test(
+export const validateAddressByDadata = object().test(
   'Проверка адреса по наличию дадаты',
   ADDRESS_NOT_FROM_DADATA_ERROR,
   ({ value, dadata }) => {
@@ -67,7 +35,7 @@ const validateAddressByDadata = object().test(
   }
 )
 
-const schema = Yup.object({
+export const peopleSchemaValidation = Yup.object({
   people: Yup.array().of(
     Yup.object().shape({
       reasonOfLiving: Yup.string().when(['realAddress'], {
@@ -81,7 +49,7 @@ const schema = Yup.object({
   ),
 })
 
-const initialPersonData = {
+export const initialPersonData = {
   addressRegistration: {
     value: undefined,
     dadata: undefined,
@@ -98,7 +66,7 @@ function ChangeClientDataAdvancedForm() {
     defaultValues: {
       people: [initialPersonData],
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(peopleSchemaValidation),
   })
 
   const { fields, remove, append } = useFieldArray({

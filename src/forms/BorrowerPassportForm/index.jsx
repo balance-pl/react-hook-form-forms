@@ -12,9 +12,9 @@ import Button from '../../components/Button'
 import LinkButton from '../../components/LinkButton'
 import InputDate from '../../components/InputDate'
 import { yupResolver } from '@hookform/resolvers/yup'
+import IconDelete from '../../components/IconDelete'
 
 import { REQUIRED_MESSAGE } from '../../constants/errors'
-import IconDelete from '../../components/IconDelete'
 
 import styles from './styles.module.scss'
 

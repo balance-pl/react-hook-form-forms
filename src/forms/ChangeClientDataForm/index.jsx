@@ -1,8 +1,6 @@
 import React from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as Yup from 'yup'
-import { object } from 'yup'
 
 import H from '../../components/H'
 import FormRow from '../../components/FormRow'
@@ -13,98 +11,19 @@ import Row from '../../components/Grid/Row'
 import Col from '../../components/Grid/Col'
 import Button from '../../components/Button'
 
-import { isExistDadata } from '../RegistrationForm'
+import {
+  initialPersonData,
+  peopleSchemaValidation,
+} from '../ChangeClientDataAdvancedForm'
 
-import { REQUIRED_MESSAGE } from '../../constants/errors'
-
-const getFakeOptions = () =>
-  Promise.resolve([
-    {
-      id: 1,
-      name: 'г. Москва, ул. Тверская, д.123',
-      data: {
-        house: 123,
-        street: 'Тверская',
-        city: 'Москва',
-      },
-    },
-    {
-      id: 2,
-      name: 'г. Калининград, ул. Какая-то, д.12',
-      data: {
-        house: 12,
-        street: 'Какая-то',
-        city: 'Калининград',
-      },
-    },
-  ])
-
-const FAKE_REASONS_FOR_LIVING = [
-  {
-    id: 1,
-    name: 'Аренда',
-  },
-  {
-    id: 2,
-    name: 'Проживание у родственников',
-  },
-]
-
-const ADDRESS_NOT_FROM_DADATA_ERROR = 'Адрес должен быть из подсказки'
-const validateAddressByDadata = object().test(
-  'Проверка адреса по наличию дадаты',
-  ADDRESS_NOT_FROM_DADATA_ERROR,
-  ({ value, dadata }) => {
-    if (value) {
-      return isExistDadata(dadata)
-    }
-    return true
-  }
-)
-
-const schema = Yup.object({
-  people: Yup.array().of(
-    Yup.object().shape({
-      reasonOfLiving: Yup.string().when(['realAddress'], {
-        is: ({ value }) => Boolean(value),
-        then: Yup.string().required(REQUIRED_MESSAGE),
-        otherwise: Yup.string(),
-      }),
-      addressRegistration: validateAddressByDadata,
-      realAddress: validateAddressByDadata,
-    })
-  ),
-})
+import { FAKE_REASONS_FOR_LIVING, getFakeOptions } from '../../fakeData'
 
 function ChangeClientDataForm() {
   const { control, handleSubmit, watch } = useForm({
     defaultValues: {
-      people: [
-        {
-          addressRegistration: {
-            value: undefined,
-            dadata: undefined,
-          },
-          realAddress: {
-            value: undefined,
-            dadata: undefined,
-          },
-          areTheSameAddresses: false,
-        },
-        {
-          addressRegistration: {
-            value: undefined,
-            dadata: undefined,
-          },
-          realAddress: {
-            value: undefined,
-            dadata: undefined,
-          },
-          areTheSameAddresses: false,
-        },
-      ],
+      people: [initialPersonData],
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(peopleSchemaValidation),
   })
 
   const { fields } = useFieldArray({
