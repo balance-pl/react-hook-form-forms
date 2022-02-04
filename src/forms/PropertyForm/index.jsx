@@ -45,6 +45,7 @@ const schema = yup.object({
       surname: yup.string().required(REQUIRED_MESSAGE),
       name: yup.string().required(REQUIRED_MESSAGE),
       email: yup.string().email(ERROR_MESSAGE_INVALID_EMAIL),
+      phone: yup.string().email(ERROR_MESSAGE_INVALID_EMAIL),
     })
   ),
   inn: yup.string().required(REQUIRED_MESSAGE),

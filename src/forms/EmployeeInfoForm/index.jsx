@@ -1,6 +1,5 @@
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
 
 // Components
 import Button from '../../components/Button'
@@ -11,10 +10,9 @@ import Input from '../../components/Input'
 import InputDate from '../../components/InputDate'
 import InputSuggest from '../../components/InputSuggest'
 import SelectBox from '../../components/SelectBox'
-import {
-  ERROR_MESSAGE_INVALID_EMAIL,
-  REQUIRED_MESSAGE,
-} from '../../constants/errors'
+
+// Helpers
+import { employerSchema } from './validationSchema'
 
 const fakeAddresses = () =>
   Promise.resolve([
@@ -70,21 +68,10 @@ const fakeEmployers = () =>
     },
   ])
 
-const employerSchema = yup.object({
-  surname: yup.string().required(REQUIRED_MESSAGE),
-  name: yup.string().required(REQUIRED_MESSAGE),
-  gender: yup.string().required(REQUIRED_MESSAGE),
-  birthday: yup.string().required(REQUIRED_MESSAGE),
-  email: yup.string().email(ERROR_MESSAGE_INVALID_EMAIL),
-  phone: yup.string().required(REQUIRED_MESSAGE),
-})
-
 function EmployeeInfoForm() {
-  const { control, handleSubmit, watch } = useForm({
+  const { control, handleSubmit } = useForm({
     resolver: yupResolver(employerSchema),
   })
-
-  console.log("watch('phone') -> ", watch('phone'))
 
   const onSubmit = (data) => {
     alert(JSON.stringify(data))
