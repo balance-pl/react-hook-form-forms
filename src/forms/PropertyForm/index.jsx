@@ -14,9 +14,14 @@ import Input from '../../components/Input'
 import ObjectFields from './components/ObjectFields'
 import SellersFields from './components/SellersFields'
 
+// Helpers
+import { validatePhone } from '../../helpers/validators'
+import { formatNumber } from '../../helpers/formatters'
+
 import {
   ERROR_MESSAGE_INVALID_EMAIL,
   REQUIRED_MESSAGE,
+  VALIDATION_PHONE_ERROR,
 } from '../../constants/errors'
 
 export const initialSellerData = {
@@ -45,7 +50,12 @@ const schema = yup.object({
       surname: yup.string().required(REQUIRED_MESSAGE),
       name: yup.string().required(REQUIRED_MESSAGE),
       email: yup.string().email(ERROR_MESSAGE_INVALID_EMAIL),
-      phone: yup.string().email(ERROR_MESSAGE_INVALID_EMAIL),
+      phone: yup
+        .string()
+        .test('checkPhone', VALIDATION_PHONE_ERROR, (value) => {
+          if (!value) return true
+          return validatePhone(formatNumber(value))
+        }),
     })
   ),
   inn: yup.string().required(REQUIRED_MESSAGE),

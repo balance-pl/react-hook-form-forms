@@ -97,11 +97,12 @@ function SellersForm({ control, submitSellerData }) {
                     <Controller
                       control={control}
                       name={`sellers.${index}.phone`}
-                      render={({ field }) => (
+                      render={({ field, fieldState }) => (
                         <Input
                           {...field}
                           label="Телефон"
                           mask="+7 (999) 999-99-99"
+                          error={fieldState.error?.message}
                         />
                       )}
                     />
