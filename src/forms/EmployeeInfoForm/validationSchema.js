@@ -18,7 +18,7 @@ export const employerSchema = yup.object({
   email: yup.string().email(ERROR_MESSAGE_INVALID_EMAIL),
   phone: yup
     .string()
-    .test('checkPhone', VALIDATION_PHONE_ERROR, (value) => {
+    .test('checkPhone', VALIDATION_PHONE_ERROR, (value, other) => {
       if (!value) return true
       return validatePhone(formatNumber(value))
     })

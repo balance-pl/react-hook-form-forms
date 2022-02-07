@@ -123,10 +123,14 @@ function ChangeClientDataAdvancedForm() {
                       />
                     )}
                   />
-                  <IconDelete
-                    className={styles.ChangeClientDataAdvancedForm__IconDelete}
-                    onClick={handleDelete(index)}
-                  />
+                  {fields.length > 1 && (
+                    <IconDelete
+                      className={
+                        styles.ChangeClientDataAdvancedForm__IconDelete
+                      }
+                      onClick={handleDelete(index)}
+                    />
+                  )}
                 </div>
               </FormRow>
 

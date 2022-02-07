@@ -64,8 +64,7 @@ function BorrowerPassportForm() {
 
   return (
     <div>
-      <H size="1">Информация о сотруднике</H>
-
+      <H size="1">Паспорт заёмщика</H>
       <form onSubmit={handleSubmit(onSubmit)}>
         {fields.map((field, index) => {
           return (
