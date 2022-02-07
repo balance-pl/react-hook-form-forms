@@ -12,7 +12,12 @@ import Input from '../../components/Input'
 import Button from '../../components/Button'
 import InputSuggest from '../../components/InputSuggest'
 
-import { REQUIRED_MESSAGE } from '../../constants/errors'
+import {
+  REQUIRED_MESSAGE,
+  VALIDATION_PHONE_ERROR,
+} from '../../constants/errors'
+import { validatePhone } from '../../helpers/validators'
+import { formatNumber } from '../../helpers/formatters'
 
 const getFakeDadata = () =>
   Promise.resolve([
@@ -44,7 +49,13 @@ const schema = yup.object({
   email: yup.string().required(REQUIRED_MESSAGE),
   password: yup.string().required(REQUIRED_MESSAGE),
   nameOfTheLegalEntity: yup.string().required(REQUIRED_MESSAGE),
-  phone: yup.string().required(REQUIRED_MESSAGE),
+  phone: yup
+    .string()
+    .test('checkPhone', VALIDATION_PHONE_ERROR, (value) => {
+      if (!value) return true
+      return validatePhone(formatNumber(value))
+    })
+    .required(REQUIRED_MESSAGE),
   ogrn: yup.string().required(REQUIRED_MESSAGE),
 })
 

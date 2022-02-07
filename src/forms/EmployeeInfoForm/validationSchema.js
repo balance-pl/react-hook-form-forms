@@ -9,28 +9,18 @@ import {
 // Helpers
 import { formatNumber } from '../../helpers/formatters'
 import { validatePhone } from '../../helpers/validators'
-import { addValidatorToYupString } from '../../helpers/yupAddValidator'
 
-const yupWithValidators = addValidatorToYupString(
-  yup,
-  { nameMethod: 'checkPhoneNumber', prefixForTest: 'phoneNumber' },
-  (value) => {
-    if (value) {
-      return validatePhone(formatNumber(value))
-    }
-
-    return true
-  }
-)
-
-export const employerSchema = yupWithValidators.object({
-  surname: yupWithValidators.string().required(REQUIRED_MESSAGE),
-  name: yupWithValidators.string().required(REQUIRED_MESSAGE),
-  gender: yupWithValidators.string().required(REQUIRED_MESSAGE),
-  birthday: yupWithValidators.string().required(REQUIRED_MESSAGE),
-  email: yupWithValidators.string().email(ERROR_MESSAGE_INVALID_EMAIL),
-  phone: yupWithValidators
+export const employerSchema = yup.object({
+  surname: yup.string().required(REQUIRED_MESSAGE),
+  name: yup.string().required(REQUIRED_MESSAGE),
+  gender: yup.string().required(REQUIRED_MESSAGE),
+  birthday: yup.string().required(REQUIRED_MESSAGE),
+  email: yup.string().email(ERROR_MESSAGE_INVALID_EMAIL),
+  phone: yup
     .string()
-    .checkPhoneNumber(VALIDATION_PHONE_ERROR)
+    .test('checkPhone', VALIDATION_PHONE_ERROR, (value) => {
+      if (!value) return true
+      return validatePhone(formatNumber(value))
+    })
     .required(REQUIRED_MESSAGE),
 })
