@@ -24,13 +24,30 @@ import { FAKE_REASONS_FOR_LIVING, getFakeOptions } from '../../fakeData'
 import styles from './styles.module.scss'
 
 const ADDRESS_NOT_FROM_DADATA_ERROR = 'Адрес должен быть из подсказки'
+
+const handleCheckForDadataValidate = ({ value, dadata }) => {
+  if (value) {
+    return isExistDadata(dadata)
+  }
+  return true
+}
+
 export const validateAddressByDadata = object().test(
   'Проверка адреса по наличию дадаты',
   ADDRESS_NOT_FROM_DADATA_ERROR,
-  ({ value, dadata }) => {
-    if (value) {
-      return isExistDadata(dadata)
+  handleCheckForDadataValidate
+)
+
+const validateRealAddressByDadata = object().test(
+  'checkRealAddressDadata',
+  ADDRESS_NOT_FROM_DADATA_ERROR,
+  ({ value, dadata }, schema) => {
+    const areTheSameAddresses = schema.parent.areTheSameAddresses
+
+    if (!areTheSameAddresses) {
+      return handleCheckForDadataValidate({ value, dadata })
     }
+
     return true
   }
 )
@@ -38,13 +55,23 @@ export const validateAddressByDadata = object().test(
 export const peopleSchemaValidation = Yup.object({
   people: Yup.array().of(
     Yup.object().shape({
-      reasonOfLiving: Yup.string().when(['realAddress'], {
-        is: ({ value }) => Boolean(value),
-        then: Yup.string().required(REQUIRED_MESSAGE),
-        otherwise: Yup.string(),
-      }),
+      reasonOfLiving: Yup.string().test(
+        'checkForReasonForLiving',
+        REQUIRED_MESSAGE,
+        (value, schema) => {
+          const areTheSameAddresses = schema.parent.areTheSameAddresses
+          const registrationAddress = schema.parent.addressRegistration.value
+          const realAddress = schema.parent.realAddress.value
+
+          if (!areTheSameAddresses && (registrationAddress || realAddress)) {
+            return !!value
+          }
+
+          return true
+        }
+      ),
       addressRegistration: validateAddressByDadata,
-      realAddress: validateAddressByDadata,
+      realAddress: validateRealAddressByDadata,
     })
   ),
 })
