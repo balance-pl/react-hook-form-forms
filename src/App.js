@@ -21,6 +21,9 @@ const EmployeeInfoForm = React.lazy(() => import('./forms/EmployeeInfoForm'))
 const LoginForm = React.lazy(() => import('./forms/LoginForm'))
 const PropertyForm = React.lazy(() => import('./forms/PropertyForm'))
 const RegistrationForm = React.lazy(() => import('./forms/RegistrationForm'))
+const ApproximatelyCalculateForm = React.lazy(() =>
+  import('./forms/ApproximatelyCalculateForm')
+)
 
 const PATH = {
   BORROWER_PASSPORT_FORM: 'borrower-passport-form',
@@ -31,6 +34,7 @@ const PATH = {
   LOGIN_FORM: 'login-form',
   PROPERTY_FORM: 'property-form',
   REGISTRATION_FORM: 'registration-form',
+  APPROXIMATELY_CALCULATE_FORM: 'approximately-calculate-form',
 }
 
 function NavLink(props) {
@@ -80,6 +84,9 @@ function App() {
           </NavLink>
           <NavLink to={`/${PATH.CHANGE_CLIENT_DATA_ADVANCED_FORM}`}>
             Изменения данных клиента (продвинутое)
+          </NavLink>
+          <NavLink to={`/${PATH.APPROXIMATELY_CALCULATE_FORM}`}>
+            Примерный расчёт
           </NavLink>
         </nav>
       </aside>
@@ -150,6 +157,17 @@ function App() {
                 </React.Suspense>
               }
             />
+            <Route path="*" element={<IndexComponent />} />
+
+            <Route
+              path={PATH.APPROXIMATELY_CALCULATE_FORM}
+              element={
+                <React.Suspense fallback={<SuspenceFallback />}>
+                  <ApproximatelyCalculateForm />
+                </React.Suspense>
+              }
+            />
+
             <Route path="*" element={<IndexComponent />} />
           </Routes>
         </div>
